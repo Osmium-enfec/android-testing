@@ -1,32 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:gravity="center">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/content_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Welcome to Episode 01"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <TextView
-        android:id="@+id/tv_message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="This is Assessment 01"
-        android:textSize="16sp"
-        android:layout_marginTop="16dp" />
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Student Grade Manager"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="24dp" />
 
-    <Button
-        android:id="@+id/btn_submit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Submit"
-        android:layout_marginTop="24dp" />
+        <!-- Student Name Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Student Name:"
+            android:textSize="14sp"
+            android:layout_marginTop="8dp" />
 
-</LinearLayout>
+        <EditText
+            android:id="@+id/et_student_name"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint="Enter name"
+            android:inputType="text" />
+
+        <!-- Student ID Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Student ID:"
+            android:textSize="14sp"
+            android:layout_marginTop="16dp" />
+
+        <EditText
+            android:id="@+id/et_student_id"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint="Enter ID"
+            android:inputType="text" />
+
+        <!-- Add Student Button -->
+        <Button
+            android:id="@+id/btn_add_student"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Add Student"
+            android:layout_marginTop="16dp"
+            android:textSize="16sp" />
+
+        <!-- Grade Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Grade (0-100):"
+            android:textSize="14sp"
+            android:layout_marginTop="24dp" />
+
+        <EditText
+            android:id="@+id/et_grade"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint="Enter grade"
+            android:inputType="number" />
+
+        <!-- Add Grade Button -->
+        <Button
+            android:id="@+id/btn_add_grade"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Add Grade"
+            android:layout_marginTop="16dp"
+            android:textSize="16sp" />
+
+        <!-- Error Display -->
+        <TextView
+            android:id="@+id/error"
+            android:tag="error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/holo_red_dark"
+            android:layout_marginTop="16dp"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+</ScrollView>
+

@@ -33,64 +33,90 @@ class MainActivityTest {
     }
 
     @Test
-    fun testActivityHasViews() {
+    fun testActivityHasInputFields() {
+        try {
+            val activity = Robolectric.buildActivity(MainActivity::class.java)
+                .create()
+                .get()
+
+            val studentNameInput = activity.findViewById<android.widget.EditText>(R.id.et_student_name)
+            val studentIdInput = activity.findViewById<android.widget.EditText>(R.id.et_student_id)
+            val gradeInput = activity.findViewById<android.widget.EditText>(R.id.et_grade)
+
+            assertNotNull("Student name input should exist", studentNameInput)
+            assertNotNull("Student ID input should exist", studentIdInput)
+            assertNotNull("Grade input should exist", gradeInput)
+            reporter.addTestResult("testActivityHasInputFields", true)
+        } catch (e: AssertionError) {
+            reporter.addTestResult("testActivityHasInputFields", false, e.message ?: "Assertion failed")
+            throw e
+        } catch (e: Exception) {
+            reporter.addTestResult("testActivityHasInputFields", false, "Exception: ${e.message}")
+            throw e
+        }
+    }
+
+    @Test
+    fun testActivityHasButtons() {
+        try {
+            val activity = Robolectric.buildActivity(MainActivity::class.java)
+                .create()
+                .get()
+
+            val addStudentBtn = activity.findViewById<android.widget.Button>(R.id.btn_add_student)
+            val addGradeBtn = activity.findViewById<android.widget.Button>(R.id.btn_add_grade)
+
+            assertNotNull("Add Student button should exist", addStudentBtn)
+            assertNotNull("Add Grade button should exist", addGradeBtn)
+            assertTrue("Add Student button should be clickable", addStudentBtn?.isClickable == true)
+            assertTrue("Add Grade button should be clickable", addGradeBtn?.isClickable == true)
+            reporter.addTestResult("testActivityHasButtons", true)
+        } catch (e: AssertionError) {
+            reporter.addTestResult("testActivityHasButtons", false, e.message ?: "Assertion failed")
+            throw e
+        } catch (e: Exception) {
+            reporter.addTestResult("testActivityHasButtons", false, "Exception: ${e.message}")
+            throw e
+        }
+    }
+
+    @Test
+    fun testManagerInitialization() {
+        try {
+            val activity = Robolectric.buildActivity(MainActivity::class.java)
+                .create()
+                .get()
+
+            val manager = activity.getManager()
+            assertNotNull("Manager should be initialized", manager)
+            assertEquals("Manager should have no students initially", 0, manager.getStudentCount())
+            reporter.addTestResult("testManagerInitialization", true)
+        } catch (e: AssertionError) {
+            reporter.addTestResult("testManagerInitialization", false, e.message ?: "Assertion failed")
+            throw e
+        } catch (e: Exception) {
+            reporter.addTestResult("testManagerInitialization", false, "Exception: ${e.message}")
+            throw e
+        }
+    }
+
+    @Test
+    fun testTitleDisplaysCorrectText() {
         try {
             val activity = Robolectric.buildActivity(MainActivity::class.java)
                 .create()
                 .get()
 
             val titleView = activity.findViewById<android.widget.TextView>(R.id.tv_title)
-            val messageView = activity.findViewById<android.widget.TextView>(R.id.tv_message)
-            val submitButton = activity.findViewById<android.widget.Button>(R.id.btn_submit)
-
             assertNotNull("Title view should exist", titleView)
-            assertNotNull("Message view should exist", messageView)
-            assertNotNull("Submit button should exist", submitButton)
-            reporter.addTestResult("testActivityHasViews", true)
+            assertTrue("Title should contain 'Student Grade Manager'", 
+                titleView?.text.toString().contains("Student Grade Manager"))
+            reporter.addTestResult("testTitleDisplaysCorrectText", true)
         } catch (e: AssertionError) {
-            reporter.addTestResult("testActivityHasViews", false, e.message ?: "Assertion failed")
+            reporter.addTestResult("testTitleDisplaysCorrectText", false, e.message ?: "Assertion failed")
             throw e
         } catch (e: Exception) {
-            reporter.addTestResult("testActivityHasViews", false, "Exception: ${e.message}")
-            throw e
-        }
-    }
-
-    @Test
-    fun testButtonClickable() {
-        try {
-            val activity = Robolectric.buildActivity(MainActivity::class.java)
-                .create()
-                .get()
-
-            val submitButton = activity.findViewById<android.widget.Button>(R.id.btn_submit)
-            assertNotNull("Submit button should exist", submitButton)
-            assertTrue("Submit button should be clickable", submitButton?.isClickable == true)
-            reporter.addTestResult("testButtonClickable", true)
-        } catch (e: AssertionError) {
-            reporter.addTestResult("testButtonClickable", false, e.message ?: "Assertion failed")
-            throw e
-        } catch (e: Exception) {
-            reporter.addTestResult("testButtonClickable", false, "Exception: ${e.message}")
-            throw e
-        }
-    }
-
-    @Test
-    fun testTextViewContent() {
-        try {
-            val activity = Robolectric.buildActivity(MainActivity::class.java)
-                .create()
-                .get()
-
-            val titleView = activity.findViewById<android.widget.TextView>(R.id.tv_title)
-            assertEquals("Title should match", "Welcome to Episode 01", titleView?.text.toString())
-            reporter.addTestResult("testTextViewContent", true)
-        } catch (e: AssertionError) {
-            reporter.addTestResult("testTextViewContent", false, e.message ?: "Assertion failed")
-            throw e
-        } catch (e: Exception) {
-            reporter.addTestResult("testTextViewContent", false, "Exception: ${e.message}")
+            reporter.addTestResult("testTitleDisplaysCorrectText", false, "Exception: ${e.message}")
             throw e
         }
     }
@@ -101,7 +127,7 @@ class MainActivityTest {
         fun generateTestReport() {
             val reporter = TestReportGenerator.getInstance()
             reporter.generateReport(
-                assignmentName = "EPISODE 01 - ASSESSMENT 01: MAIN ACTIVITY",
+                assignmentName = "EPISODE 01 - ASSESSMENT 01: STUDENT GRADE MANAGER",
                 outputPath = "test_report.txt"
             )
             reporter.printQuickSummary()
