@@ -49,3 +49,21 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 }
+
+// Custom task to run tests with detailed reporting
+tasks.register("testWithReport") {
+    dependsOn("testDebug")
+    doLast {
+        println("\n✓ Tests completed! Check test_report.txt for detailed results.")
+    }
+}
+
+// Configure test logging for better output
+tasks.withType<Test> {
+    testLogging {
+        events("passed", "skipped", "failed")
+        exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+        showStandardOut = true
+        showStackTraces = true
+    }
+}
